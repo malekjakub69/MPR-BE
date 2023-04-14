@@ -1,22 +1,6 @@
-from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render, redirect
-
 from django.http import *
 from django.contrib.auth import authenticate, login, logout
 # from .models import User
-
-
-def random(request, pk):
-    if request.method == 'GET':
-        data = {'req': 'GET', 'key': pk}
-        return JsonResponse(data)
-    elif request.method == 'POST':
-        data = {'req': 'GET', 'key': pk}
-        return JsonResponse(data)
-    else:
-        return HttpResponseNotFound
 
 
 def get_user(request, pk):
@@ -80,6 +64,17 @@ def get_project(request, pk):
         return HttpResponseBadRequest
 
 
+def create_project(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden
+    if request.method == 'POST':
+        # project = Projects.objects.get(pk=pk)
+        project = {'none'}
+        return JsonResponse(project)
+    else:
+        return HttpResponseBadRequest
+
+
 def get_risks(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden
@@ -100,3 +95,35 @@ def get_risk(request, pk):
         return JsonResponse(user)
     else:
         return HttpResponseBadRequest
+
+
+def create_risk(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden
+    if request.method == 'POST':
+        # risk = Projects.objects.get(pk=pk)
+        risk = {'none'}
+        return JsonResponse(risk)
+    else:
+        return HttpResponseBadRequest
+
+def update_risk(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden
+    if request.method == 'POST':
+        # risk = Projects.objects.get(pk=pk)
+        risk = {'none'}
+        return JsonResponse(risk)
+    else:
+        return HttpResponseBadRequest
+
+def update_project(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden
+    if request.method == 'POST':
+        # project = Projects.objects.get(pk=pk)
+        project = {'none'}
+        return JsonResponse(project)
+    else:
+        return HttpResponseBadRequest
+

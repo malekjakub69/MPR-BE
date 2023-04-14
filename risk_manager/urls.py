@@ -13,4 +13,9 @@ urlpatterns = [
     path('project/<str:pk>', views.get_project, name='get_project'),
     path('risks/<str:pk>', views.get_risks, name='get_risks'),
     path('risk/<str:pk>', views.get_risk, name='get_risk'),
+    path('get_project/<str:pk>', views.get_project, name='get_project'),
+    path('create_project', views.create_project, name='create_project'),
+    path('create_risk', views.create_risk, name='create_risk'),
+    path('update_risk', views.update_risk, name='update_risk'),
+    path('update_project', views.update_project, name='update_project')
 ]
