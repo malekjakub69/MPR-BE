@@ -1,6 +1,6 @@
 from django.http import *
 from django.contrib.auth import authenticate, login, logout
-from .models import User
+from .models import User, Project
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 # from .helper import authenticate
@@ -11,9 +11,12 @@ def get_user(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        # user = Entry.objects.get(pk=pk)
-        user = {'none'}
-        return JsonResponse(user)
+        user = User.objects.get(pk=pk)
+        if user is not None:
+            data = serializers.serialize('json', [user, ])
+            return HttpResponse(data, content_type='application/json')
+        else:
+            return HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
 
@@ -34,14 +37,15 @@ def login_user(request):
         return HttpResponseForbidden()
 
 
+@csrf_exempt
 def logout_user(request):
     logout(request)
+    return HttpResponse()
 
 
 def get_users(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
-    # User.objects.create(password=make_password("test"), name="test", surname="test", email="test", role="USER")
     if request.method == 'GET':
         users = serializers.serialize('json', User.objects.all())
         return HttpResponse(users, content_type='application/json')
@@ -53,9 +57,8 @@ def get_projects(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        # projects = Projects.objects.all()
-        user = {'none'}
-        return JsonResponse(user)
+        projects = serializers.serialize('json', Project.objects.all())
+        return HttpResponse(projects, content_type='application/json')
     else:
         return HttpResponseBadRequest()
 
@@ -64,9 +67,12 @@ def get_project(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        # user = Projects.objects.get(pk=pk)
-        user = {'none'}
-        return JsonResponse(user)
+        project = Project.objects.get(pk=pk)
+        if project is not None:
+            project = serializers.serialize('json', project)
+            return HttpResponse(project, content_type='application/json')
+        else:
+            return HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
 
@@ -75,6 +81,7 @@ def create_project(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'POST':
+        # User.objects.create(password=make_password("test"), name="test", surname="test", email="test", role="USER")
         # project = Projects.objects.get(pk=pk)
         project = {'none'}
         return JsonResponse(project)
