@@ -1,8 +1,10 @@
 from django.contrib import admin
-from .models import User, RiskCategory, Project
+from .models.user import User
+from .models.project import Project, UserProject
+from .models.risk import RiskCategory, Risk
 
 admin.site.register(User)
-admin.site.register(RiskCategory)
 admin.site.register(Project)
-
-# you can create a superuser who has administrative access to the database: http://localhost:8000/admin
+admin.site.register(UserProject)
+admin.site.register(RiskCategory)
+admin.site.register(Risk)
