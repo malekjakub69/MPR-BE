@@ -11,7 +11,6 @@ urlpatterns = [
     path('user_risks/<str:pk>', views.get_user_risks, name='get_risks'),
     path('project_risks/<str:pk>', views.get_project_risks, name='get_risks'),
     path('risk/<str:pk>', views.get_risk, name='get_risk'),
-    path('get_project/<str:pk>', views.get_project, name='get_project'),
     path('create_project', views.create_project, name='create_project'),
     path('create_risk', views.create_risk, name='create_risk'),
     path('update_risk', views.update_risk, name='update_risk'),
