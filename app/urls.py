@@ -1,10 +1,7 @@
-# task.urls.py
-
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('random/<str:pk>/', views.random, name='random'),
     path('user/<str:pk>/', views.get_user, name='user'),
     path('login', views.login_user, name='login'),
     path('logout', views.logout_user, name='logout'),
