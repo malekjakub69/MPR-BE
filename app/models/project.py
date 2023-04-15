@@ -3,6 +3,7 @@ from .user import User
 from .choices import UserProjectRoles, Status
 import datetime
 
+# Class Project
 class Project(models.Model):
     owner_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=256, null=True)
