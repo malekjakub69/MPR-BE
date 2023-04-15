@@ -1,7 +1,10 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
+    path('fake', views.create_fake_user, name='fake'),
+
     path('user/<str:pk>/', views.get_user, name='user'),
     path('login', views.login_user, name='login'),
     path('logout', views.logout_user, name='logout'),

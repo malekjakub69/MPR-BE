@@ -1,10 +1,22 @@
 from django.http import *
 from django.contrib.auth import authenticate, login, logout
-from .models import User, Project, Risk, UserProject
+from .models import User, Project, Risk
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 # from .helper import authenticate
 from django.contrib.auth.hashers import make_password
+
+
+def create_fake_user(request):
+    email = "test"
+    user = User.objects.get(email=email)
+    if user is None:
+        password = make_password(email)
+        user = User.objects.create(password=password, name="test", surname="test", email="test3", role="USER")
+        data = serializers.serialize('json', [user, ])
+        return HttpResponse(data, content_type='application/json')
+    else:
+        return HttpResponseBadRequest()
 
 
 def get_user(request, pk):

@@ -24,3 +24,5 @@ url: <http://localhost:8000>
 - create_risk - POST<RISK> - LIST<RISK> 
 - update_risk - POST<RISK> - LIST<RISK>
 - update_project - POST<PROJECT> - LIST<PROJECT>
+- fake - ANY - LIST<USER> - creates new user with email "test" and password "test" to create normal user tou can use 
+funcion create_fake_user in MPR-BE/app/views.py

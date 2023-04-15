@@ -6,11 +6,11 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, UserMa
 
 
 # Class User
-class User(models.Model):    
+class User(AbstractBaseUser):
     password = models.CharField(max_length=256)
     name = models.CharField(max_length=256)
     surname = models.CharField(max_length=256)
-    email = models.EmailField(max_length=256)
+    email = models.EmailField(max_length=256, unique=True)
     role = models.CharField(max_length=64, choices=UserRoles.choices, default=UserRoles.USER)
 
     last_login = models.DateTimeField(auto_now_add=True)
