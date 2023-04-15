@@ -1,9 +1,16 @@
 # MPR-BE
 
-Install Python and Django. Then you can run the server application:
+Install Python and Django. It should be possible to open this project in PyCharm, just open it and add python3
+interpreter that has Django installed within. Then you can run the server application:
 
 ```
 python manage.py runserver
+```
+
+For creating database use:
+```
+python manage.py makemigrations
+python manage.py migrate 
 ```
 
 url: <http://localhost:8000>
