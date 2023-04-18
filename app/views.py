@@ -19,6 +19,13 @@ def create_fake_user(request):
         return HttpResponseBadRequest()
 
 
+def check_user_logged(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    else:
+        return HttpResponse()
+
+
 def get_user(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -33,7 +40,6 @@ def get_user(request, pk):
         return HttpResponseBadRequest()
 
 
-@csrf_exempt
 def login_user(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
@@ -49,7 +55,6 @@ def login_user(request):
         return HttpResponseForbidden()
 
 
-@csrf_exempt
 def logout_user(request):
     logout(request)
     return HttpResponse()

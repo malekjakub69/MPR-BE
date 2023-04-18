@@ -33,3 +33,4 @@ url: <http://localhost:8000>
 - update_project - POST<PROJECT> - LIST<PROJECT>
 - fake - ANY - LIST<USER> - creates new user with email "test" and password "test" to create normal user tou can use 
 funcion create_fake_user in MPR-BE/app/views.py
+- logged - ANY - 200 if user is logged 403 otherwise
