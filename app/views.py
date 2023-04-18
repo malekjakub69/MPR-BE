@@ -8,11 +8,11 @@ from django.contrib.auth.hashers import make_password
 
 
 def create_fake_user(request):
-    email = "test"
-    user = User.objects.get(email=email)
+    email = "test5"
+    user = User.objects.all().filter(email=email).first()
     if user is None:
         password = make_password(email)
-        user = User.objects.create(password=password, name="test", surname="test", email="test3", role="USER")
+        user = User.objects.create(password=password, name="test", surname="test", email=email, role="USER")
         data = serializers.serialize('json', [user, ])
         return HttpResponse(data, content_type='application/json')
     else:
