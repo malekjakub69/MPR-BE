@@ -40,6 +40,7 @@ def get_user(request, pk):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def login_user(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
