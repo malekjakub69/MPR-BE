@@ -65,6 +65,10 @@ CORS_EXPOSE_HEADERS = [
     "access-control-allow-credentials",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+]
+
 ROOT_URLCONF = 'ProjectRiskManager.urls'
 
 TEMPLATES = [
