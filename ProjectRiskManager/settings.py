@@ -57,6 +57,14 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
 
+CORS_ALLOW_HEADERS = [
+    "access-control-allow-credentials",
+]
+
+CORS_EXPOSE_HEADERS = [
+    "access-control-allow-credentials",
+]
+
 ROOT_URLCONF = 'ProjectRiskManager.urls'
 
 TEMPLATES = [
