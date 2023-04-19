@@ -5,7 +5,7 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 # from .helper import authenticate
 from django.contrib.auth.hashers import make_password
-
+from datetime import datetime
 
 def create_fake_user(request):
     email = "test5"
@@ -95,6 +95,7 @@ def get_project(request, pk):
         return HttpResponseBadRequest()
 
 
+csrf_exempt()
 def create_project(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -106,16 +107,18 @@ def create_project(request):
         date_begin = request.POST["date_begin"]
         date_end = request.POST["date_end"]
         user = User.objects.get(pk=owner_id)
+        begin = datetime.strptime(date_begin, "%Y-%m-%d").date()
+        end = datetime.strptime(date_end, "%Y-%m-%d").date()
         if user is not None:
             project = Project.objects.create(
-                owner_id=owner_id,
+                owner_id=user,
                 name=name,
                 description=description,
                 status=status,
-                date_begin=date_begin,
-                date_end=date_end
+                date_begin=begin,
+                date_end=end
             )
-            project = serializers.serialize('json', project)
+            project = serializers.serialize('json', [project, ])
             return HttpResponse(project, content_type='application/json')
         else:
             return HttpResponseNotFound()
