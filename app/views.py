@@ -95,7 +95,7 @@ def get_project(request, pk):
         return HttpResponseBadRequest()
 
 
-csrf_exempt()
+@csrf_exempt()
 def create_project(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
