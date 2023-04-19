@@ -87,7 +87,7 @@ def get_project(request, pk):
     if request.method == 'GET':
         project = Project.objects.get(pk=pk)
         if project is not None:
-            project = serializers.serialize('json', project)
+            project = serializers.serialize('json', [project, ])
             return HttpResponse(project, content_type='application/json')
         else:
             return HttpResponseNotFound()
@@ -132,7 +132,7 @@ def get_user_risks(request, pk):
     if request.method == 'GET':
         risk = Risk.objects.all().filter(owner=pk)
         if risk is not None:
-            risk = serializers.serialize('json', risk)
+            risk = serializers.serialize('json', [risk, ])
             return HttpResponse(risk, content_type='application/json')
         else:
             return HttpResponseNotFound()
@@ -146,7 +146,7 @@ def get_project_risks(request, pk):
     if request.method == 'GET':
         risk = Risk.objects.all().filter(project=pk)
         if risk is not None:
-            risk = serializers.serialize('json', risk)
+            risk = serializers.serialize('json', [risk, ])
             return HttpResponse(risk, content_type='application/json')
         else:
             return HttpResponseNotFound()
@@ -160,7 +160,7 @@ def get_risk(request, pk):
     if request.method == 'GET':
         risk = Risk.objects.get(pk=pk)
         if risk is not None:
-            risk = serializers.serialize('json', risk)
+            risk = serializers.serialize('json', [risk, ])
             return HttpResponse(risk, content_type='application/json')
         else:
             return HttpResponseNotFound()
@@ -187,11 +187,14 @@ def create_risk(request):
         date_updated = request.POST["date_identified"]
         date_reaction = request.POST["date_updated"]
         user = User.objects.get(pk=owner)
+        date_identified = datetime.strptime(date_identified, "%Y-%m-%d").date()
+        date_updated = datetime.strptime(date_updated, "%Y-%m-%d").date()
+        date_reaction = datetime.strptime(date_reaction, "%Y-%m-%d").date()
         if user is not None:
             project = Project.objects.get(pk=project)
             if project is not None:
                 risk = Risk.objects.create(
-                    owner=owner,
+                    owner=user,
                     category=category,
                     project=project,
                     title=title,
@@ -206,7 +209,7 @@ def create_risk(request):
                     date_updated=date_updated,
                     date_reaction=date_reaction
                 )
-                risk = serializers.serialize('json', risk)
+                risk = serializers.serialize('json', [risk, ])
                 return HttpResponse(risk, content_type='application/json')
             else:
                 return HttpResponseNotFound()
@@ -235,11 +238,14 @@ def update_risk(request):
         date_updated = request.POST["date_identified"]
         date_reaction = request.POST["date_updated"]
         user = User.objects.get(pk=owner)
+        date_identified = datetime.strptime(date_identified, "%Y-%m-%d").date()
+        date_updated = datetime.strptime(date_updated, "%Y-%m-%d").date()
+        date_reaction = datetime.strptime(date_reaction, "%Y-%m-%d").date()
         if user is not None:
             project = Project.objects.get(pk=project)
             if project is not None:
                 risk = Risk.objects.update(
-                    owner=owner,
+                    owner=user,
                     category=category,
                     project=project,
                     title=title,
@@ -254,7 +260,7 @@ def update_risk(request):
                     date_updated=date_updated,
                     date_reaction=date_reaction
                 )
-                risk = serializers.serialize('json', risk)
+                risk = serializers.serialize('json', [risk, ])
                 return HttpResponse(risk, content_type='application/json')
             else:
                 return HttpResponseNotFound()
@@ -275,16 +281,18 @@ def update_project(request):
         date_begin = request.POST["date_begin"]
         date_end = request.POST["date_end"]
         user = User.objects.get(pk=owner_id)
+        date_begin = datetime.strptime(date_begin, "%Y-%m-%d").date()
+        date_end = datetime.strptime(date_end, "%Y-%m-%d").date()
         if user is not None:
             project = Project.objects.update(
-                owner_id=owner_id,
+                owner_id=user,
                 name=name,
                 description=description,
                 status=status,
                 date_begin=date_begin,
                 date_end=date_end
             )
-            project = serializers.serialize('json', project)
+            project = serializers.serialize('json', [project, ])
             return HttpResponse(project, content_type='application/json')
         else:
             return HttpResponseNotFound()
