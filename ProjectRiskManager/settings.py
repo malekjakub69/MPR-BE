@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'app.Middleware.AccessControlAllowMiddleware.AccessControlAllowMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -89,7 +90,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ProjectRiskManager.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
