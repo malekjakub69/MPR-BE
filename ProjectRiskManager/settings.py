@@ -56,6 +56,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    "http://172.17.170.144:3000"
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -68,6 +69,7 @@ CORS_EXPOSE_HEADERS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
+    "http://172.17.170.144:3000"
 ]
 
 ROOT_URLCONF = 'ProjectRiskManager.urls'
