@@ -1,11 +1,14 @@
-from django.http import *
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, logout
-from .models import User, Project, Risk, RiskCategory
-from django.core import serializers
-from django.views.decorators.csrf import csrf_exempt
 # from .helper import authenticate
 from django.contrib.auth.hashers import make_password
-from datetime import datetime
+from django.core import serializers
+from django.http import *
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import Project, Risk, RiskCategory, User
+
 
 def create_fake_user(request):
     email = "test5"
@@ -24,7 +27,9 @@ def check_user_logged(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     else:
-        return HttpResponse()
+        user = User.objects.get(email=request.user.email)
+        data = serializers.serialize('json', [user, ])
+        return HttpResponse(data, content_type='application/json')
 
 
 @csrf_exempt
