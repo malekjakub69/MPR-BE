@@ -142,7 +142,7 @@ def get_user_risks(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        risk = Risk.objects.all().filter(owner=pk)
+        risk = Risk.objects.all().filter(owner=pk).first()
         if risk is not None:
             risk = serializers.serialize('json', [risk, ])
             return HttpResponse(risk, content_type='application/json')
@@ -157,7 +157,7 @@ def get_project_risks(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        risk = Risk.objects.all().filter(project=pk)
+        risk = Risk.objects.all().filter(project=pk).first()
         if risk is not None:
             risk = serializers.serialize('json', [risk, ])
             return HttpResponse(risk, content_type='application/json')
