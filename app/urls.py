@@ -18,5 +18,8 @@ urlpatterns = [
     path('create_project', views.create_project, name='create_project'),
     path('create_risk', views.create_risk, name='create_risk'),
     path('update_risk', views.update_risk, name='update_risk'),
-    path('update_project', views.update_project, name='update_project')
+    path('update_project', views.update_project, name='update_project'),
+    path('create_risk_category', views.create_risk_category, name='create_risk_category'),
+    path('update_risk_category', views.update_risk_category, name='update_risk_category'),
+    path('delete_risk_category/<str:pk>/', views.delete_risk_category, name='delete_risk_category'),
 ]

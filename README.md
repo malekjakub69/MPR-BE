@@ -41,3 +41,6 @@ app is running at <http://localhost:8000>
 - fake - ANY - LIST<USER> - creates new user with email "test" and password "test" to create normal user tou can use 
 funcion create_fake_user in MPR-BE/app/views.py
 - logged - ANY - 200 if user is logged 403 otherwise
+- create_risk_category - POST<RISK_CATEGORY> - LIST<RISK_CATEGORY>
+- update_risk_category - POST<RISK_CATEGORY> - LIST<RISK_CATEGORY>
+- delete_risk_category/<str:pk>
