@@ -22,4 +22,6 @@ urlpatterns = [
     path('create_risk_category', views.create_risk_category, name='create_risk_category'),
     path('update_risk_category', views.update_risk_category, name='update_risk_category'),
     path('delete_risk_category/<str:pk>/', views.delete_risk_category, name='delete_risk_category'),
+    path('delete_project/<str:pk>/', views.delete_project, name='delete_project'),
+    path('delete_risk/<str:pk>/', views.delete_risk, name='delete_risk'),
 ]

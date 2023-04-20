@@ -365,3 +365,31 @@ def delete_risk_category(request, pk):
             HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
+    
+@csrf_exempt
+def delete_project(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'GET':
+        project = Project.objects.get(pk=pk)
+        if project is not None:
+            project.delete()
+            return HttpResponse()
+        else:
+            HttpResponseNotFound()
+    else:
+        return HttpResponseBadRequest()
+    
+@csrf_exempt
+def delete_risk(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'GET':
+        risk = Risk.objects.get(pk=pk)
+        if risk is not None:
+            risk.delete()
+            return HttpResponse()
+        else:
+            HttpResponseNotFound()
+    else:
+        return HttpResponseBadRequest()
