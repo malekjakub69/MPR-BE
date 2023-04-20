@@ -19,6 +19,7 @@ def create_fake_user(request):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def check_user_logged(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -26,6 +27,7 @@ def check_user_logged(request):
         return HttpResponse()
 
 
+@csrf_exempt
 def get_user(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -56,11 +58,13 @@ def login_user(request):
         return HttpResponseForbidden()
 
 
+@csrf_exempt
 def logout_user(request):
     logout(request)
     return HttpResponse()
 
 
+@csrf_exempt
 def get_users(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -71,6 +75,7 @@ def get_users(request):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def get_projects(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -81,6 +86,7 @@ def get_projects(request):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def get_project(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -126,6 +132,7 @@ def create_project(request):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def get_user_risks(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -140,6 +147,7 @@ def get_user_risks(request, pk):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def get_project_risks(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -154,6 +162,7 @@ def get_project_risks(request, pk):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def get_risk(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -168,6 +177,7 @@ def get_risk(request, pk):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def create_risk(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -220,6 +230,7 @@ def create_risk(request):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def update_risk(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -271,6 +282,7 @@ def update_risk(request):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
 def update_project(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
@@ -299,4 +311,3 @@ def update_project(request):
             return HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
-
