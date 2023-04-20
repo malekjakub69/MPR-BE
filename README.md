@@ -13,7 +13,14 @@ python manage.py makemigrations
 python manage.py migrate 
 ```
 
-url: <http://localhost:8000>
+For inserting example data to local db use:
+```
+python3 manage.py insert_data
+```
+It creates user (email=user1, pass=user1) and project with risks
+
+
+app is running at <http://localhost:8000>
 
 
 ### Open gates:
