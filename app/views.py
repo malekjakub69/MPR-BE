@@ -1,6 +1,6 @@
 from django.http import *
 from django.contrib.auth import authenticate, login, logout
-from .models import User, Project, Risk
+from .models import User, Project, Risk, RiskCategory
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 # from .helper import authenticate
@@ -172,21 +172,22 @@ def create_risk(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'POST':
-        owner = request.POST[""]
-        category = request.POST["owner"]
-        project = request.POST["category"]
-        title = request.POST["project"]
-        description = request.POST["title"]
-        danger = request.POST["description"]
-        trigger = request.POST["danger"]
-        reactions = request.POST["trigger"]
-        probability = request.POST["reactions"]
-        impact = request.POST["probability"]
-        status = request.POST["impact"]
-        date_identified = request.POST["status"]
-        date_updated = request.POST["date_identified"]
-        date_reaction = request.POST["date_updated"]
+        owner = request.POST["owner"]
+        category = request.POST["category"]
+        project = request.POST["project"]
+        title = request.POST["title"]
+        description = request.POST["description"]
+        danger = request.POST["danger"]
+        trigger = request.POST["trigger"]
+        reactions = request.POST["reactions"]
+        probability = request.POST["probability"]
+        impact = request.POST["impact"]
+        status = request.POST["status"]
+        date_identified = request.POST["date_identified"]
+        date_updated = request.POST["date_updated"]
+        date_reaction = request.POST["date_reaction"]
         user = User.objects.get(pk=owner)
+        category = RiskCategory.objects.get(pk=category)
         date_identified = datetime.strptime(date_identified, "%Y-%m-%d").date()
         date_updated = datetime.strptime(date_updated, "%Y-%m-%d").date()
         date_reaction = datetime.strptime(date_reaction, "%Y-%m-%d").date()
