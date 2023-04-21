@@ -19,6 +19,16 @@ python3 manage.py insert_data
 ```
 It creates user (email=user1, pass=user1) and project with risks
 
+For inserting data in beta version use:
+```
+python3 manage.py beta
+```
+It creates users (admin@mpr.cz, dvorak@mpr.cz, jirasek@mpr.cz), password is same: "user1"
+
+To delete all data in the database use:
+```
+python3 manage.py clear
+```
 
 app is running at <http://localhost:8000>
 
@@ -44,3 +54,5 @@ funcion create_fake_user in MPR-BE/app/views.py
 - create_risk_category - POST<RISK_CATEGORY> - LIST<RISK_CATEGORY>
 - update_risk_category - POST<RISK_CATEGORY> - LIST<RISK_CATEGORY>
 - delete_risk_category/<str:pk>
+- delete_project/<str:pk>
+- delete_risk/<str:pk>
