@@ -124,6 +124,7 @@ def create_project(request):
         name = request.POST["name"]
         description = request.POST["description"]
         status = request.POST["status"]
+        scale_risk = request.POST["scale_risk"]
         date_begin = request.POST["date_begin"]
         date_end = request.POST["date_end"]
         user = User.objects.get(pk=owner_id)
@@ -135,6 +136,7 @@ def create_project(request):
                 name=name,
                 description=description,
                 status=status,
+                scale_risk=scale_risk,
                 date_begin=begin,
                 date_end=end
             )
@@ -299,6 +301,7 @@ def update_project(request):
         name = request.POST["name"] if request.POST["name"] else old.name
         description = request.POST["description"] if request.POST["description"] else old.description
         status = request.POST["status"] if request.POST["status"] else old.status
+        scale_risk = request.POST["scale_risk"] if request.POST["scale_risk"] else old.scale_risk
         date_begin = request.POST["date_begin"] if request.POST["date_begin"] else old.date_begin
         date_end = request.POST["date_end"] if request.POST["date_end"] else old.date_end
         date_begin = datetime.strptime(date_begin, "%Y-%m-%d").date()

@@ -8,9 +8,10 @@ from datetime import date, timedelta
 
 
 class Command(BaseCommand):
+    password = "Password1"
 
     def _create_user(self):
-        password = make_password("user1")
+        password = make_password(self.password)
         user = User(password=password, name="user1", surname="user1", email="user1", role="USER")
         user.save()
 
@@ -21,6 +22,7 @@ class Command(BaseCommand):
             name="Project1",
             description="Test Project",
             status=Status.CONCEPT,
+            scale_risk=True,
             date_begin=date.today(),
             date_end=date.today() + timedelta(days=14)
         )

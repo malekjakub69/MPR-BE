@@ -1,10 +1,7 @@
 from django.core.management.base import BaseCommand
 from app.models.user import User
-from app.models.project import Project, UserProject
+from app.models.project import Project
 from app.models.risk import Risk, RiskCategory
-from app.models.choices import Status, UserProjectRoles, Probability, Impact
-from django.contrib.auth.hashers import make_password
-from datetime import date, timedelta
 
 
 class Command(BaseCommand):

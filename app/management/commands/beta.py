@@ -4,28 +4,29 @@ from app.models.project import Project, UserProject
 from app.models.risk import Risk, RiskCategory
 from app.models.choices import Status, UserProjectRoles, Probability, Impact
 from django.contrib.auth.hashers import make_password
-from datetime import date, timedelta
+from datetime import date
 
 
 class Command(BaseCommand):
     manager_id = None
     user_id = None
     project_id = None
+    password = "Password1"
 
     # Users
     def _create_admin(self):
-        password = make_password("user1")
+        password = make_password(self.password)
         user = User(password=password, name="admin", surname="admin", email="admin@mpr.cz", role="ADMIN")
         user.save()
 
     def _create_project_manager(self):
-        password = make_password("user1")
+        password = make_password(self.password)
         user = User(password=password, name="Jan", surname="Dvořák", email="dvorak@mpr.cz", role="PROJECT_MANAGER")
         user.save()
         self.manager_id = User.objects.latest('id')
 
     def _create_user(self):
-        password = make_password("user1")
+        password = make_password(self.password)
         user = User(password=password, name="Tomáš", surname="Jirásek", email="jirasek@mpr.cz", role="USER")
         user.save()
         self.user_id = User.objects.latest('id')
@@ -37,6 +38,7 @@ class Command(BaseCommand):
             name="Project Risk Manager",
             description="Systém pro podporu řízení rizik v projektech",
             status=Status.ACTIVE,
+            scale_risk=True,
             date_begin=date(2023, 2, 20),
             date_end=date(2023, 5, 5)
         )
