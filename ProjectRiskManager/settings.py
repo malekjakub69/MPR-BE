@@ -65,10 +65,6 @@ SESSION_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r".*",
-]
-
 CORS_ALLOW_HEADERS = [
     "access-control-allow-credentials",
 ]
