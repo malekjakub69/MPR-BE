@@ -67,6 +67,7 @@ CSRF_COOKIE_SAMESITE = 'None'
 
 CORS_ALLOW_HEADERS = [
     "access-control-allow-credentials",
+    "content-type",
 ]
 
 CORS_EXPOSE_HEADERS = [
