@@ -1,14 +1,14 @@
 from datetime import datetime
-
 from django.contrib.auth import authenticate, login, logout
 # from .helper import authenticate
 from django.contrib.auth.hashers import make_password
 from django.core import serializers
 from django.http import *
 from django.views.decorators.csrf import csrf_exempt
-
+import logging
 from .models import Project, Risk, RiskCategory, User
 
+logger = logging.getLogger(__name__)
 
 def create_fake_user(request):
     email = "test5"
@@ -90,6 +90,7 @@ def get_projects(request):
     else:
         return HttpResponseBadRequest()
 
+
 @csrf_exempt
 def get_risk_categories(request):
     if not request.user.is_authenticated:
@@ -129,6 +130,7 @@ def create_project(request):
         user = User.objects.get(email=request.user.email)
         begin = datetime.strptime(date_begin, "%Y-%m-%d").date()
         end = datetime.strptime(date_end, "%Y-%m-%d").date()
+        # logger.warning('Homepage was accessed at ' + str(request.user.email) + ' hours!')
         if user is not None:
             project = Project.objects.create(
                 owner_id=user,
