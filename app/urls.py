@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout', views.logout_user, name='logout'),
     path('users', views.get_users, name='get_users'),
     path('projects', views.get_projects, name='get_projects'),
+    path('risk_categories', views.get_risk_categories, name='get_risk_categories'),
     path('project/<str:pk>', views.get_project, name='get_project'),
     path('user_risks/<str:pk>', views.get_user_risks, name='get_risks'),
     path('project_risks/<str:pk>', views.get_project_risks, name='get_risks'),

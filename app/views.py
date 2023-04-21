@@ -90,6 +90,15 @@ def get_projects(request):
     else:
         return HttpResponseBadRequest()
 
+@csrf_exempt
+def get_risk_categories(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'GET':
+        risk_categories = serializers.serialize('json', RiskCategory.objects.all())
+        return HttpResponse(risk_categories, content_type='application/json')
+    else:
+        return HttpResponseBadRequest()
 
 @csrf_exempt
 def get_project(request, pk):
@@ -142,12 +151,9 @@ def get_user_risks(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        risk = Risk.objects.all().filter(owner=pk).first()
-        if risk is not None:
-            risk = serializers.serialize('json', [risk, ])
-            return HttpResponse(risk, content_type='application/json')
-        else:
-            return HttpResponseNotFound()
+        risks = Risk.objects.filter(owner=pk)
+        json_data = serializers.serialize('json', risks)
+        return HttpResponse(json_data, content_type='application/json')
     else:
         return HttpResponseBadRequest()
 
@@ -157,12 +163,9 @@ def get_project_risks(request, pk):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        risk = Risk.objects.all().filter(project=pk).first()
-        if risk is not None:
-            risk = serializers.serialize('json', [risk, ])
-            return HttpResponse(risk, content_type='application/json')
-        else:
-            return HttpResponseNotFound()
+        risks = Risk.objects.filter(project=pk)
+        json_data = serializers.serialize('json', risks)
+        return HttpResponse(json_data, content_type='application/json')
     else:
         return HttpResponseBadRequest()
 

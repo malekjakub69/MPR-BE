@@ -40,6 +40,7 @@ app is running at <http://localhost:8000>
 - logout - GET - HTTP OK
 - users - GET - LIST<USER>
 - projects - GET - LIST<PROJECT>
+- risk_categories - GET - LIST<RISK_CATEGORY>
 - project/<str:pk> - GET - LIST<PROJECT>
 - user_risks/<str:pk> - GET - LIST<RISK>
 - project_risks/<str:pk> - GET - LIST<RISK>
