@@ -50,13 +50,17 @@ app is running at <http://localhost:8000>
 - projects - GET - LIST<PROJECT>
 - risk_categories - GET - LIST<RISK_CATEGORY>
 - project/<str:pk> - GET - LIST<PROJECT>
+- project_roles/<str:pk> - GET - LIST<USER_PROJECT>
 - user_risks/<str:pk> - GET - LIST<RISK>
 - project_risks/<str:pk> - GET - LIST<RISK>
 - risk/<str:pk> - GET - LIST<RISK>
 - create_project - POST<PROJECT> - LIST<PROJECT>
+- create_project_role - POST<USER_PROJECT> - LIST<USER_PROJECT>
 - create_risk - POST<RISK> - LIST<RISK> 
 - update_risk - POST<RISK> - LIST<RISK>
 - update_project - POST<PROJECT> - LIST<PROJECT>
+- update_project_role - POST<USER_PROJECT> - LIST<USER_PROJECT>
+
 - fake - ANY - LIST<USER> - creates new user with email "test" and password "test" to create normal user tou can use 
 funcion create_fake_user in MPR-BE/app/views.py
 - logged - ANY - 200 if user is logged 403 otherwise
@@ -65,3 +69,4 @@ funcion create_fake_user in MPR-BE/app/views.py
 - delete_risk_category/<str:pk>
 - delete_project/<str:pk>
 - delete_risk/<str:pk>
+- delete_project_role/<str:pk>
