@@ -554,9 +554,7 @@ def project_user_role(request):
     project_pk = request.POST['project_pk']
     user_pk = request.POST['user_pk']
     user_project = UserProject.objects.all().filter(user=user_pk, project=project_pk)
-    print(user_project)
-    print(UserProject.objects.all())
     if len(user_project) > 0:
         result = serializers.serialize('json', [user_project.first(), ])
         return HttpResponse(result, content_type='application/json')
-    return HttpResponseBadRequest()
+    return HttpResponseNotFound()
