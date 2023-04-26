@@ -8,7 +8,7 @@ class UserRoles(models.TextChoices):
 
 class UserProjectRoles(models.TextChoices):
     MANAGER = "MANAGER", _("Manažer"),
-    RESPONSIBLE = "RESPONSIBLE", _("Zodpovědná osoba"),
+    EXTERNAL = "EXTERNAL", _("Externí uživatel"),
     EMPLOYEE = "EMPLOYEE", _("Zaměstnanec")
 
 class Probability(models.TextChoices):
