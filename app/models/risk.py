@@ -29,7 +29,7 @@ class Risk(models.Model):
     probability = models.CharField(max_length=64, choices=Probability.choices)
     impact = models.CharField(max_length=64, choices=Impact.choices)
     status = models.CharField(max_length=64, choices=Status.choices)
-    phase = models.CharField(max_length=64, choices=Phase.choices)
+    phase = models.CharField(max_length=64, choices=Phase.choices, default=Phase.IMPLEMENTATION)
     date_identified = models.DateField(null=True)
     date_updated = models.DateField(null=True)
     date_reaction = models.DateField(null=True)
