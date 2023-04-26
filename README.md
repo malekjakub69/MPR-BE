@@ -71,3 +71,4 @@ funcion create_fake_user in MPR-BE/app/views.py
 - delete_risk/<str:pk> - GET - OK
 - update_user - POST<USER> - LIST<USER>
 - delete_user/<str:pk>/ - GET - OK
+- all_risks - GET - LIST<RISK>

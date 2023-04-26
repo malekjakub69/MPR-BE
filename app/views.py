@@ -483,7 +483,7 @@ def update_user(request):
         old = User.objects.all().filter(pk=pk)
         if old is None:
             return HttpResponseNotFound()
-        if request.POST["password"]:
+        if request.POST["password"] is not None:
             password = make_password(request.POST["password"])
         else:
             password = old.password
@@ -517,3 +517,11 @@ def delete_user(request, pk):
             HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
+
+
+@csrf_exempt
+def all_risks(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    risks = serializers.serialize('json', Risk.objects.all())
+    return HttpResponse(risks, content_type='application/json')
