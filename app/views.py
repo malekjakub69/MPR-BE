@@ -479,7 +479,7 @@ def update_user(request):
         return HttpResponseForbidden()
     if request.method == 'POST':
         pk = request.POST["pk"]
-        old = User.objects.all().filter(pk)
+        old = User.objects.all().filter(pk=pk)
         if old is None:
             return HttpResponseNotFound()
         if request.POST["password"]:
