@@ -15,6 +15,7 @@ class RiskCategory(models.Model):
     def __str__(self):
         return self.name
 
+
 # Class Risk
 class Risk(models.Model):
     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)

@@ -399,3 +399,48 @@ def delete_risk(request, pk):
             HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
+
+
+@csrf_exempt
+def update_user(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        pk = request.POST["pk"]
+        old = User.objects.all().filter(pk)
+        if old is None:
+            return HttpResponseNotFound()
+        if request.POST["password"]:
+            password = make_password(request.POST["password"])
+        else:
+            password = old.password
+        name = request.POST["name"] if request.POST["name"] else old.name
+        surname = request.POST["surname"] if request.POST["surname"] else old.surname
+        email = request.POST["email"] if request.POST["email"] else old.email
+        role = request.POST["role"] if request.POST["role"] else old.role
+        user = old.update(
+            name=name,
+            surname=surname,
+            email=email,
+            role=role,
+            password=password,
+        )
+        user = serializers.serialize('json', [user, ])
+        return HttpResponse(user, content_type='application/json')
+    else:
+        return HttpResponseBadRequest()
+
+
+@csrf_exempt
+def delete_user(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'GET':
+        user = User.objects.get(pk=pk)
+        if user is not None:
+            user.delete()
+            return HttpResponse()
+        else:
+            HttpResponseNotFound()
+    else:
+        return HttpResponseBadRequest()

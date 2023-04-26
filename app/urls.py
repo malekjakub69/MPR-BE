@@ -25,4 +25,6 @@ urlpatterns = [
     path('delete_risk_category/<str:pk>/', views.delete_risk_category, name='delete_risk_category'),
     path('delete_project/<str:pk>/', views.delete_project, name='delete_project'),
     path('delete_risk/<str:pk>/', views.delete_risk, name='delete_risk'),
+    path('update_user', views.update_user, name='update_user'),
+    path('delete_user/<str:pk>/', views.delete_user, name='delete_user'),
 ]

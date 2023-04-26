@@ -62,6 +62,8 @@ funcion create_fake_user in MPR-BE/app/views.py
 - logged - ANY - 200 if user is logged 403 otherwise
 - create_risk_category - POST<RISK_CATEGORY> - LIST<RISK_CATEGORY>
 - update_risk_category - POST<RISK_CATEGORY> - LIST<RISK_CATEGORY>
-- delete_risk_category/<str:pk>
-- delete_project/<str:pk>
-- delete_risk/<str:pk>
+- delete_risk_category/<str:pk> - GET - OK
+- delete_project/<str:pk> - GET - OK
+- delete_risk/<str:pk> - GET - OK
+- update_user - POST<USER> - LIST<USER>
+- delete_user/<str:pk>/ - GET - OK
