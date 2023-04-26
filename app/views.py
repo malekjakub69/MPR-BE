@@ -11,6 +11,7 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
+
 def create_fake_user(request):
     email = "test5"
     user = User.objects.all().filter(email=email).first()
@@ -102,6 +103,7 @@ def get_risk_categories(request):
     else:
         return HttpResponseBadRequest()
 
+
 @csrf_exempt
 def get_project(request, pk):
     if not request.user.is_authenticated:
@@ -148,7 +150,8 @@ def create_project(request):
             return HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
-    
+
+
 @csrf_exempt
 def create_project_role(request):
     if not request.user.is_authenticated:
@@ -169,7 +172,8 @@ def create_project_role(request):
         return HttpResponse(user_project, content_type='application/json')
     else:
         return HttpResponseBadRequest()
-    
+
+
 @csrf_exempt
 def get_project_roles(request, pk):
     if not request.user.is_authenticated:
@@ -180,6 +184,7 @@ def get_project_roles(request, pk):
         return HttpResponse(json_data, content_type='application/json')
     else:
         return HttpResponseBadRequest()
+
 
 @csrf_exempt
 def get_user_risks(request, pk):
@@ -355,6 +360,7 @@ def update_project(request):
     else:
         return HttpResponseBadRequest()
 
+
 @csrf_exempt
 def update_project_role(request):
     if not request.user.is_authenticated:
@@ -378,6 +384,7 @@ def update_project_role(request):
         return HttpResponse(project_role, content_type='application/json')
     else:
         return HttpResponseBadRequest()
+
 
 @csrf_exempt
 def create_risk_category(request):
@@ -430,7 +437,8 @@ def delete_risk_category(request, pk):
             HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
-    
+
+
 @csrf_exempt
 def delete_project(request, pk):
     if not request.user.is_authenticated:
@@ -444,7 +452,8 @@ def delete_project(request, pk):
             HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
-    
+
+
 @csrf_exempt
 def delete_project_role(request, pk):
     if not request.user.is_authenticated:
@@ -458,7 +467,8 @@ def delete_project_role(request, pk):
             HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
-    
+
+
 @csrf_exempt
 def delete_risk(request, pk):
     if not request.user.is_authenticated:
@@ -483,21 +493,23 @@ def update_user(request):
         old = User.objects.all().filter(pk=pk)
         if old is None:
             return HttpResponseNotFound()
-        if request.POST["password"] is not None:
+        old_object = old[0]
+        if request.POST.get('password', False):
             password = make_password(request.POST["password"])
         else:
-            password = old.password
-        name = request.POST["name"] if request.POST["name"] else old.name
-        surname = request.POST["surname"] if request.POST["surname"] else old.surname
-        email = request.POST["email"] if request.POST["email"] else old.email
-        role = request.POST["role"] if request.POST["role"] else old.role
-        user = old.update(
+            password = old_object.password
+        name = request.POST.get('name', False) if request.POST.get('name', False) else old_object.name
+        surname = request.POST.get("surname", False) if request.POST.get("surname", False) else old_object.surname
+        email = request.POST.get("email", False) if request.POST.get("email", False) else old_object.email
+        role = request.POST.get("role", False) if request.POST.get("role", False) else old_object.role
+        old.update(
             name=name,
             surname=surname,
             email=email,
             role=role,
             password=password,
         )
+        user = User.objects.all().get(pk=old_object.pk)
         user = serializers.serialize('json', [user, ])
         return HttpResponse(user, content_type='application/json')
     else:
