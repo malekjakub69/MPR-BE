@@ -6,7 +6,7 @@ from django.core import serializers
 from django.http import *
 from django.views.decorators.csrf import csrf_exempt
 import logging
-from .models import Project, Risk, RiskCategory, User
+from .models import Project, Risk, RiskCategory, User, UserProject
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +147,38 @@ def create_project(request):
             return HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
+    
+@csrf_exempt
+def create_project_role(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        user = request.POST["user"]
+        project = request.POST["project"]
+        role = request.POST["role"]
+        user = User.objects.get(pk=user)
+        project = Project.objects.get(pk=project)
 
+        user_project = UserProject.objects.create(
+            user=user,
+            project=project,
+            role=role
+        )
+        user_project = serializers.serialize('json', [user_project, ])
+        return HttpResponse(user_project, content_type='application/json')
+    else:
+        return HttpResponseBadRequest()
+    
+@csrf_exempt
+def get_project_roles(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'GET':
+        project_roles = UserProject.objects.filter(project=pk)
+        json_data = serializers.serialize('json', project_roles)
+        return HttpResponse(json_data, content_type='application/json')
+    else:
+        return HttpResponseBadRequest()
 
 @csrf_exempt
 def get_user_risks(request, pk):
@@ -319,6 +350,29 @@ def update_project(request):
     else:
         return HttpResponseBadRequest()
 
+@csrf_exempt
+def update_project_role(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        old = UserProject.objects.all().filter(pk=request.POST["pk"])
+        if old is None:
+            return HttpResponseNotFound()
+        user = request.POST["user"] if request.POST["user"] else old.user
+        project = request.POST["project"] if request.POST["project"] else old.project
+        role = request.POST["role"] if request.POST["role"] else old.role
+        user = User.objects.get(pk=user)
+        project = Project.objects.get(pk=project)
+
+        project_role = old.update(
+            user=user,
+            project=project,
+            role=role
+        )
+        project_role = serializers.serialize('json', [project_role, ])
+        return HttpResponse(project_role, content_type='application/json')
+    else:
+        return HttpResponseBadRequest()
 
 @csrf_exempt
 def create_risk_category(request):
@@ -380,6 +434,20 @@ def delete_project(request, pk):
         project = Project.objects.get(pk=pk)
         if project is not None:
             project.delete()
+            return HttpResponse()
+        else:
+            HttpResponseNotFound()
+    else:
+        return HttpResponseBadRequest()
+    
+@csrf_exempt
+def delete_project_role(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method == 'GET':
+        project_role = UserProject.objects.get(pk=pk)
+        if project_role is not None:
+            project_role.delete()
             return HttpResponse()
         else:
             HttpResponseNotFound()
