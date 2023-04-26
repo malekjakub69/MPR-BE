@@ -31,3 +31,10 @@ class Status(models.TextChoices):
     CLOSED = "CLOSED", _("Uzatvorené"),
     DELETED = "DELETED", _("Zmazané"),
     TRANSPIRED = "TRANSPIRED", _("Prihodilo sa"),
+
+class Phase(models.TextChoices):
+    STUDY = "STUDY", _("Úvodní studie"),
+    DESIGN = "DESIGN", _("Návrh"),
+    IMPLEMENTATION = "IMPLEMENTATION", _("Implementace"),
+    TESTING = "TESTING", _("Testování"),
+    MANAGEMENT = "MANAGEMENT", _("Vedení projektu"),

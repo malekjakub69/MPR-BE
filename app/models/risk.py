@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .user import User
 from .project import Project
-from .choices import Probability, Impact, Status
+from .choices import Probability, Impact, Status, Phase
 
 # Class RiskCategory
 class RiskCategory(models.Model):
@@ -29,6 +29,7 @@ class Risk(models.Model):
     probability = models.CharField(max_length=64, choices=Probability.choices)
     impact = models.CharField(max_length=64, choices=Impact.choices)
     status = models.CharField(max_length=64, choices=Status.choices)
+    phase = models.CharField(max_length=64, choices=Phase.choices)
     date_identified = models.DateField(null=True)
     date_updated = models.DateField(null=True)
     date_reaction = models.DateField(null=True)

@@ -234,6 +234,7 @@ def create_risk(request):
         probability = request.POST["probability"]
         impact = request.POST["impact"]
         status = request.POST["status"]
+        phase = request.POST["phase"]
         date_identified = request.POST["date_identified"]
         date_updated = request.POST["date_updated"]
         date_reaction = request.POST["date_reaction"]
@@ -257,6 +258,7 @@ def create_risk(request):
                     probability=probability,
                     impact=impact,
                     status=status,
+                    phase=phase,
                     date_identified=date_identified,
                     date_updated=date_updated,
                     date_reaction=date_reaction
@@ -290,6 +292,7 @@ def update_risk(request):
         probability = request.POST["probability"] if request.POST["probability"] else old.probability
         impact = request.POST["impact"] if request.POST["impact"] else old.impact
         status = request.POST["status"] if request.POST["status"] else old.status
+        phase = request.POST["phase"] if request.POST["phase"] else old.phase
         date_identified = request.POST["date_identified"] if request.POST["date_identified"] else old.date_identified
         date_updated = request.POST["date_updated"] if request.POST["date_updated"] else old.date_updated
         date_reaction = request.POST["date_reaction"] if request.POST["date_reaction"] else old.date_reaction
@@ -309,6 +312,7 @@ def update_risk(request):
             probability=probability,
             impact=impact,
             status=status,
+            phase=phase,
             date_identified=date_identified,
             date_updated=date_updated,
             date_reaction=date_reaction
