@@ -7,6 +7,7 @@ from django.http import *
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from .models import Project, Risk, RiskCategory, User, UserProject
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -294,7 +295,7 @@ def update_risk(request):
         status = request.POST["status"] if request.POST["status"] else old.status
         phase = request.POST["phase"] if request.POST["phase"] else old.phase
         date_identified = request.POST["date_identified"] if request.POST["date_identified"] else old.date_identified
-        date_updated = request.POST["date_updated"] if request.POST["date_updated"] else old.date_updated
+        date_updated = datetime.now().strftime("%Y-%m-%d")
         date_reaction = request.POST["date_reaction"] if request.POST["date_reaction"] else old.date_reaction
         user = User.objects.get(email=request.user.email)
         date_identified = datetime.strptime(date_identified, "%Y-%m-%d").date()
