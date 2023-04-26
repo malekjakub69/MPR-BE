@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import logging
 from .models import Project, Risk, RiskCategory, User, UserProject
 from datetime import datetime
+from .models.choices import UserProjectRoles
 
 logger = logging.getLogger(__name__)
 
@@ -144,6 +145,12 @@ def create_project(request):
                 date_begin=begin,
                 date_end=end
             )
+            user_project = UserProject.objects.create(
+                user=user,
+                project=project,
+                role=UserProjectRoles.MANAGER
+            )
+            print(user_project)
             project = serializers.serialize('json', [project, ])
             return HttpResponse(project, content_type='application/json')
         else:
@@ -374,7 +381,6 @@ def update_project_role(request):
         role = request.POST["role"] if request.POST["role"] else old.role
         user = User.objects.get(pk=user)
         project = Project.objects.get(pk=project)
-
         project_role = old.update(
             user=user,
             project=project,
@@ -493,7 +499,7 @@ def update_user(request):
         old = User.objects.all().filter(pk=pk)
         if old is None:
             return HttpResponseNotFound()
-        old_object = old[0]
+        old_object = old.first()
         if request.POST.get('password', False):
             password = make_password(request.POST["password"])
         else:
@@ -537,3 +543,20 @@ def all_risks(request):
         return HttpResponseForbidden()
     risks = serializers.serialize('json', Risk.objects.all())
     return HttpResponse(risks, content_type='application/json')
+
+
+@csrf_exempt
+def project_user_role(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    if request.method != 'POST':
+        return HttpResponseBadRequest()
+    project_pk = request.POST['project_pk']
+    user_pk = request.POST['user_pk']
+    user_project = UserProject.objects.all().filter(user=user_pk, project=project_pk)
+    print(user_project)
+    print(UserProject.objects.all())
+    if len(user_project) > 0:
+        result = serializers.serialize('json', [user_project.first(), ])
+        return HttpResponse(result, content_type='application/json')
+    return HttpResponseBadRequest()

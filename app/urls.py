@@ -32,4 +32,5 @@ urlpatterns = [
     path('update_user', views.update_user, name='update_user'),
     path('delete_user/<str:pk>/', views.delete_user, name='delete_user'),
     path('all_risks', views.all_risks, name='all_risks'),
+    path('project_user_role/', views.project_user_role, name='project_user_role'),
 ]
