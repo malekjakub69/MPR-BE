@@ -292,28 +292,29 @@ def update_risk(request):
         return HttpResponseForbidden()
     if request.method == 'POST':
         pk = request.POST["pk"]
-        old = Project.objects.all().filter(pk=pk)
+        old = Risk.objects.all().filter(pk=pk)
+        old_object = old.first()
         if old is None:
             return HttpResponseNotFound()
-        category = request.POST["category"] if request.POST["category"] else old.category
-        project = request.POST["project"] if request.POST["project"] else old.project
-        title = request.POST["title"] if request.POST["title"] else old.title
-        description = request.POST["description"] if request.POST["description"] else old.description
-        danger = request.POST["danger"] if request.POST["danger"] else old.danger
-        trigger = request.POST["trigger"] if request.POST["trigger"] else old.trigger
-        reactions = request.POST["reactions"] if request.POST["reactions"] else old.reactions
-        probability = request.POST["probability"] if request.POST["probability"] else old.probability
-        impact = request.POST["impact"] if request.POST["impact"] else old.impact
-        status = request.POST["status"] if request.POST["status"] else old.status
-        phase = request.POST["phase"] if request.POST["phase"] else old.phase
-        date_identified = request.POST["date_identified"] if request.POST["date_identified"] else old.date_identified
+        category = request.POST.get("category", old_object.category)
+        project = request.POST.get("project", old_object.project)
+        title = request.POST.get("title", old_object.title)
+        description = request.POST.get("description", old_object.description)
+        danger = request.POST.get("danger", old_object.danger)
+        trigger = request.POST.get("trigger", old_object.trigger)
+        reactions = request.POST.get("reactions", old_object.reactions)
+        probability = request.POST.get("probability", old_object.probability)
+        impact = request.POST.get("impact", old_object.impact)
+        status = request.POST.get("status", old_object.status)
+        phase = request.POST.get("phase", old_object.phase)
+        date_identified = request.POST.get("date_identified", str(old_object.date_identified))
         date_updated = datetime.now().strftime("%Y-%m-%d")
-        date_reaction = request.POST["date_reaction"] if request.POST["date_reaction"] else old.date_reaction
+        date_reaction = request.POST.get("date_reaction", str(old_object.date_reaction))
         user = User.objects.get(email=request.user.email)
         date_identified = datetime.strptime(date_identified, "%Y-%m-%d").date()
         date_updated = datetime.strptime(date_updated, "%Y-%m-%d").date()
         date_reaction = datetime.strptime(date_reaction, "%Y-%m-%d").date()
-        risk = old.update(
+        old.update(
             owner=user,
             category=category,
             project=project,
@@ -330,6 +331,7 @@ def update_risk(request):
             date_updated=date_updated,
             date_reaction=date_reaction
         )
+        risk = Risk.objects.all().get(pk=old_object.pk)
         risk = serializers.serialize('json', [risk, ])
         return HttpResponse(risk, content_type='application/json')
     else:
