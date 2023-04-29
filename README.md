@@ -9,34 +9,24 @@ python manage.py runserver
 
 For creating database use:
 ```
+python3 manage.py makemigrations --merge //if needed
 python manage.py makemigrations
 python manage.py migrate 
 ```
 
 -
 
-For inserting example data to local db use:
-```
-python3 manage.py insert_data
-```
-It creates user (email=user1, pass=Password1) and project with risks
 
 For inserting data in beta version use:
 ```
 python3 manage.py beta
 ```
-It creates users (admin@mpr.cz, dvorak@mpr.cz, jirasek@mpr.cz), password is same: "Password1"
+It creates users (admin@mpr.cz, manager@mpr.cz, user@mpr.cz, user2@mpr.cz, user3@mpr.cz), password is always: "Password1"
 
 To delete all data in the database use:
 ```
 python3 manage.py clear
 ```
-
-To create users use:
-```
-python3 manage.py create_users
-```
-It creates users (admin@mpr.cz, dvorak@mpr.cz, jirasek@mpr.cz, dan@mpr.cz), password is same: "Password1"
 
 app is running at <http://localhost:8000>
 

@@ -15,3 +15,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self._delete_db()
+
+        self.stdout.write("All data successfully deleted")
+    
