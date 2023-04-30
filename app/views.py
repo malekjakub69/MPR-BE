@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import logging
 from .models import Project, Risk, RiskCategory, User, UserProject
 from datetime import datetime
-from .models.choices import UserProjectRoles
+from .models.choices import UserProjectRoles, UserRoles
 
 logger = logging.getLogger(__name__)
 
@@ -88,8 +88,21 @@ def get_projects(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     if request.method == 'GET':
-        projects = serializers.serialize('json', Project.objects.all())
-        return HttpResponse(projects, content_type='application/json')
+        pk = request.user.pk
+        users = User.objects.filter(pk=pk)
+        if len(users) > 0:
+            if users[0].role == UserRoles.ADMIN:
+                projects = Project.objects.all()
+                projects = serializers.serialize('json', projects)
+                return HttpResponse(projects, content_type='application/json')
+            else:
+                # projects = Project.objects.all().select_related('')
+                userProjects = UserProject.objects.all().filter(user=pk)
+                projects = map(lambda x: x.project, userProjects)
+                projects = serializers.serialize('json', projects)
+                return HttpResponse(projects, content_type='application/json')
+        else:
+            return HttpResponseNotFound()
     else:
         return HttpResponseBadRequest()
 

@@ -3,6 +3,7 @@ from .user import User
 from .choices import UserProjectRoles, Status
 import datetime
 
+
 # Class Project
 class Project(models.Model):
     owner_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
@@ -15,7 +16,8 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 # Class UserProject
 class UserProject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
