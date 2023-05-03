@@ -67,7 +67,7 @@ class Command(BaseCommand):
             name="Project Risk Manager",
             description="Systém pro podporu řízení rizik v projektech",
             status=Status.ACTIVE,
-            scale_risk=True,
+            scale_risk=False,
             date_begin=date(2023, 2, 20),
             date_end=date(2023, 5, 5)
         )
@@ -218,7 +218,7 @@ class Command(BaseCommand):
             danger="Může vést k nejasnostem mezi zúčastněnými stranami a následně k problémům v dalším průběhu projektu",
             trigger="Nezabezpečení dobré organizace v úvodu projektu. Málo střetnutí mezi zákazníkem a všemi členy projektového týmu.",
             reactions="Plánování střetnutí v určitých intervalech v úvodu projektu. Dobrá dokumentace cílů projektu.",
-            probability=Probability.TINY,
+            probability=Probability.LOW,
             impact=Impact.MEDIUM,
             status=Status.CLOSED,
             phase=Phase.MANAGEMENT,
@@ -659,7 +659,7 @@ class Command(BaseCommand):
             danger="Může vést k nejasnostem mezi zúčastněnými stranami a následně k problémům v dalším průběhu projektu",
             trigger="Nezabezpečení dobré organizace v úvodu projektu. Málo střetnutí mezi zákazníkem a všemi členy projektového týmu.",
             reactions="Plánování střetnutí v určitých intervalech v úvodu projektu. Dobrá dokumentace cílů projektu.",
-            probability=Probability.TINY,
+            probability=Probability.LOW,
             impact=Impact.MEDIUM,
             status=Status.ACTIVE,
             phase=Phase.MANAGEMENT,
